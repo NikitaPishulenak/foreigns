@@ -11,7 +11,7 @@ class ForeignersList {
     private $_rules = array('id' =>array(1, 6, 8, 9, 17, 21), 'fio' => array(1, 6, 8, 9, 12, 17, 21), 'country' => array(1, 6, 8, 9, 12, 17, 21), 'inv' => array(1, 6, 8, 9, 12, 17, 21), 'res' => array(1, 6, 8, 9, 14, 15, 16, 17, 21), 'edu' => array(2, 8, 9, 17, 21), 'hor' => array(1, 6, 8, 9, 17, 21), 'hoc' => array(3, 8, 9, 17, 21), 'zas' => array(3, 8, 9, 17, 21),
 	    'isp' => array(6, 8, 9, 14, 15, 16, 17, 21), 'med' => array(4, 8, 9, 17, 21), 'enr' => array(1, 6, 8, 9, 13, 17, 21), 'pet' => array(1, 6, 8, 9, 14, 15, 16, 17, 21), 'status' => array(1, 6, 8, 9, 17, 21));
     private $_sort = array('fio', 'invdate', 'resdate', 'edudate', 'hordate', 'hocdate', 'ispdate', 'meddate', 'enrdate', 'petdate', 'country', 'status', 'zasdate', 'id');
-    private $_classes = array('id' => '','fio' => 'fio', 'country' => 'country', 'inv' => 'invitation', 'res' => 'residence', 'edu' => 'educationcontract', 'hor' => 'hostelorder', 'hoc' => 'hostelcontract',
+    private $_classes = array('fio' => 'fio', 'country' => 'country', 'inv' => 'invitation', 'res' => 'residence', 'edu' => 'educationcontract', 'hor' => 'hostelorder', 'hoc' => 'hostelcontract',
         'zas' => 'zaselenie', 'isp' => 'ispolkom', 'med' => 'medicalcheckup', 'enr' => 'enrollment', 'pet' => 'petition', 'status' => 'status');
 	
     private $outside = array(1, 8, 9);// users имеющие отдельные списки
@@ -276,12 +276,12 @@ class ForeignersList {
             DATE_FORMAT(enrdate,'%d.%m.%Y') enrdate,pet,DATE_FORMAT(petdate,'%d.%m.%Y') petdate,IF((DATEDIFF(CURDATE(),resdate)>=5 AND (res IS NULL)),1,0) as attention
             FROM {$this->_table} WHERE removed = '{$archiv}' {$where} ORDER BY {$attention} {$this->_table}.{$sort} {$direction}");
 
-        $counterForegines=1;
+        $counterForegines=0;
         while ($row = mysql_fetch_assoc($query)) {
             $counterForegines++;
            // print_r($row);
             $class = $row['attention'] == 1 ? "attention": "";
-            $return .= "<tr id='{$row['id']}' class=\"{$class}\">{$this->builtRowStages($row)}</tr>";
+            $return .= "<tr id='{$row['id']}' class=\"{$class}\"><td>$counterForegines</td>{$this->builtRowStages($row)}</tr>";
         }
 		
         $return .= "</tbody></table>";
