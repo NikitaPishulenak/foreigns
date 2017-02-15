@@ -7,12 +7,12 @@ function updateCallBack (&$item, $key) {
 class ForeignersList {
     private $_table = 'iws_foreigners'; //Имя таблицы с иностранцами
     private $_fields = array('id' => 'NULL','fio' => NULL,'adduserid' => 'NULL', 'inv' => 'NULL','invdate' => 'NULL','res' => 'NULL','resdate' => 'NULL','reshoddate' => 'NULL','edu' => 'NULL', 'edudate' => 'NULL', 'hor' => 'NULL',
-        'hordate' => 'NULL','hoc' => 'NULL','hocdate' => 'NULL','zas' => 'NULL','zasdate' => 'NULL','isp' => 'NULL','ispdate' => 'NULL','med' => 'NULL','meddate' => 'NULL','enr' => 'NULL','enrdate' => 'NULL','pet' => 'NULL','petdate' => 'NULL', 'removed' => 0, 'country' => 'NULL', 'status' => 'NULL');
-    private $_rules = array('id' =>array(1, 6, 8, 9, 17, 21), 'fio' => array(1, 6, 8, 9, 12, 17, 21), 'country' => array(1, 6, 8, 9, 12, 17, 21), 'inv' => array(1, 6, 8, 9, 12, 17, 21), 'res' => array(1, 6, 8, 9, 14, 15, 16, 17, 21), 'edu' => array(2, 8, 9, 17, 21), 'hor' => array(1, 6, 8, 9, 17, 21), 'hoc' => array(3, 8, 9, 17, 21), 'zas' => array(3, 8, 9, 17, 21),
+        'hordate' => 'NULL','hoc' => 'NULL','hocdate' => 'NULL','zas' => 'NULL','zasdate' => 'NULL','isp' => 'NULL','ispdate' => 'NULL','med' => 'NULL','meddate' => 'NULL','enr' => 'NULL','enrdate' => 'NULL','pet' => 'NULL','petdate' => 'NULL', 'removed' => 0, 'country' => 'NULL', 'status' => 'NULL', 'depart' => 'NULL');
+    private $_rules = array('id' =>array(1, 6, 8, 9, 17, 21), 'fio' => array(1, 6, 8, 9, 12, 17, 21), 'depart' => array(1, 6, 8, 9, 12, 17, 21), 'country' => array(1, 6, 8, 9, 12, 17, 21), 'inv' => array(1, 6, 8, 9, 12, 17, 21), 'invdate' => array(1, 6, 8, 9, 12, 17, 21),'res' => array(1, 6, 8, 9, 14, 15, 16, 17, 21), 'edu' => array(2, 8, 9, 17, 21), 'hor' => array(1, 6, 8, 9, 17, 21), 'hoc' => array(3, 8, 9, 17, 21), 'zas' => array(3, 8, 9, 17, 21),
 	    'isp' => array(6, 8, 9, 14, 15, 16, 17, 21), 'med' => array(4, 8, 9, 17, 21), 'enr' => array(1, 6, 8, 9, 13, 17, 21), 'pet' => array(1, 6, 8, 9, 14, 15, 16, 17, 21), 'status' => array(1, 6, 8, 9, 17, 21));
-    private $_sort = array('fio', 'invdate', 'resdate', 'edudate', 'hordate', 'hocdate', 'ispdate', 'meddate', 'enrdate', 'petdate', 'country', 'status', 'zasdate', 'id');
-    private $_classes = array('fio' => 'fio', 'country' => 'country', 'inv' => 'invitation', 'res' => 'residence', 'edu' => 'educationcontract', 'hor' => 'hostelorder', 'hoc' => 'hostelcontract',
-        'zas' => 'zaselenie', 'isp' => 'ispolkom', 'med' => 'medicalcheckup', 'enr' => 'enrollment', 'pet' => 'petition', 'status' => 'status');
+    private $_sort = array('fio', 'invdate', 'resdate', 'edudate', 'hordate', 'hocdate', 'ispdate', 'meddate', 'enrdate', 'petdate', 'country', 'status', 'zasdate', 'adduserid', 'inv');
+    private $_classes = array('fio' => 'fio', 'depart' => 'depart', 'country' => 'country', 'invdate' => 'invdate', 'inv' => 'invitation', 'res' => 'residence', 'edu' => 'educationcontract', 'hor' => 'hostelorder', 'hoc' => 'hostelcontract',
+        'zas' => 'zaselenie', 'isp' => 'ispolkom', 'med' => 'medicalcheckup', 'enr' => 'enrollment','status' => 'status');
 	
     private $outside = array(1, 8, 9);// users имеющие отдельные списки
     private $dekan_rule = array(1, 6, 21);
@@ -53,9 +53,11 @@ class ForeignersList {
         $archiv = isset($_SESSION['archiv']) ?  $_SESSION['archiv'] : 0;
 		
         if($key == 'status') $val = $this->getStatusName($val);
+       // elseif($key == 'depart') $val = $this->getDepartment($key, $val);
         //elseif($key == 'fio') $val .= $this->getUserName();
-		
-        $text = ($archiv === 1) ? '' : 'добавить';
+
+        if($key!=='depart')
+            $text = ($archiv === 1) ? '' : 'добавить';
 		
         return empty($val) ? $text : "<span class='text'>{$val}</span>";
     }
@@ -88,7 +90,7 @@ class ForeignersList {
 	
     private function getDepartment($id, $key)
     {
-        if($key == 'fio') return "<span class='department'>{$this->getUserName($id)}</span";
+        if($key == 'depart') return "<span class='department'>{$this->getUserName($id)}</span";
     }
 	
     private function partDirection($direction)
@@ -183,7 +185,7 @@ class ForeignersList {
 	
     protected function getDescribe($key, $val)
     {
-        if($key == 'fio' || $key == 'country' || $key == 'status') $result = "";
+        if($key == 'fio' || $key == 'country' || $key == 'status' || $key == 'depart' || $key == 'inv') $result = "";
         else $result = "<span class='date'>{$val[$key.'date']}</span><br>";
 		
         return $result;
@@ -223,21 +225,27 @@ class ForeignersList {
         $attention = $attention ?  '' : 'attention DESC,';
 		
         if(in_array($_SESSION["foreignersUserid"], $this->outside)) $where = "AND adduserid = '{$_SESSION["foreignersUserid"]}' ";
-		
-        if(isset($_SESSION['foreignersSearch'])) $where .= "AND fio LIKE '%{$_SESSION['foreignersSearch']}%'";
+		//тут поиск
+        if(isset($_SESSION['foreignersSearch'])) $where .= "AND fio LIKE '%{$_SESSION['foreignersSearch']}%' OR country LIKE '%{$_SESSION['foreignersSearch']}%'";
         $return = "<table id='foreigners' class=\"table_col\">
         <thead><tr>
             <th>
-                <a href='" . self::IURL . "&sort=13{$this->partDirection($direction)}'>№</a>
+                <a>№</a>
             </th>
             <th>
                 <a href='" . self::IURL . "&sort=0{$this->partDirection($direction)}'>ФИО</a>
             </th>
             <th>
+                <a href='" . self::IURL . "&sort=13{$this->partDirection($direction)}'>Отдел</a>
+            </th>
+            <th>
                 <a href='" . self::IURL . "&sort=10{$this->partDirection($direction)}'>Страна</a>
             </th>
             <th>
-                <a href='" . self::IURL . "&sort=1{$this->partDirection($direction)}'>Оформление приглашения на учебу</a>
+                <a href='" . self::IURL . "&sort=1{$this->partDirection($direction)}'>Дата приглашения</a>
+            </th>
+            <th>
+                <a href='" . self::IURL . "&sort=14{$this->partDirection($direction)}'>Приглашения на учебу</a>
             </th>
             <th>
                 <a href='" . self::IURL . "&sort=2{$this->partDirection($direction)}'>Оформление временного пребывания</a>
@@ -262,9 +270,6 @@ class ForeignersList {
             </th>
             <th>
                 <a href='" . self::IURL . "&sort=8{$this->partDirection($direction)}'>Приказ о зачислении</a>
-            </th>
-            <th>
-                <a href='" . self::IURL . "&sort=9{$this->partDirection($direction)}'>Ходатайство врем. проживание</a>
             </th>
             <th>
                 <a href='" . self::IURL . "&sort=11{$this->partDirection($direction)}'>Статус</a>
@@ -332,7 +337,7 @@ class ForeignersList {
     public function searchForm()
     {
         $value = isset($_SESSION['foreignersSearch']) ?  $_SESSION['foreignersSearch'] : '';
-        $form = "<form id='searchForm' action='" . self::IURL . "' method='get'><input type='text' name='search' placeholder='Поиск' value='{$value}'><button title='Найти'>Найти</button></form>";
+        $form = "<form id='searchForm' action='" . self::IURL . "' method='get'><input type='text' name='search' placeholder='Поиск' value='{$value}'><button title='Найти'></button></form>";
         return $form;
     }
 	

@@ -332,7 +332,7 @@ if ($_SESSION["foreignersIsauth"] === 1) {
             $fio = $flist->getForeign($id);
             $dat = empty($fio['meddate']) ? $dat = date("d.m.Y") : $fio['meddate'];
             $fio = $fio['med'];
-            $label = "Прохождение медосмотра";
+            $label = "Прохождение медосмотра1";
             ob_start();
             require_once("tpl/addForm.tpl");
             echo ob_get_clean();

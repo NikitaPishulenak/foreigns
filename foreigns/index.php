@@ -41,8 +41,9 @@ switch($go){
             require_once("foreignersList.php");
             $list = new ForeignersList();
             if(isset($_GET['reset']))
-            $list->resetSearch();
-            if(isset($_GET['search'])) $_SESSION['foreignersSearch'] = $list->sanitizeString(iconv('UTF-8', 'Windows-1251',$_GET['search']));
+                $list->resetSearch();
+            if(isset($_GET['search']))
+                $_SESSION['foreignersSearch'] = $list->sanitizeString(iconv('UTF-8', 'Windows-1251',$_GET['search']));
             $search = $list->searchForm();
             $content .= $list->getContent();
         }
