@@ -160,6 +160,14 @@ class ForeignersList {
 		
         return $result;
     }
+    public function ClassDelFromArchiv()
+    {
+        $result = '';
+        if(in_array($_SESSION["foreignersUserid"],$this->_rules['fio']))
+            $result = "<br><span class='delFromArchiv' title='Удалить из БД'></span>";
+
+        return $result;
+    }
 	
     public function ClassAdd()
     {
@@ -191,7 +199,6 @@ class ForeignersList {
         return $result;
     }
 
-    protected $counter=1;
     public function builtRowStages($row = array())
     {
         $result = null;
@@ -204,6 +211,8 @@ class ForeignersList {
         }
 		
         if($archiv === 0) $result .= "<td style='background:#fff;'>{$this->classDel()}</td>";
+        elseif ($archiv===1) $result.="<td style='background:#fff;'>{$this->classDelFromArchiv()}</td>";
+
         return $result;
     }
 	
@@ -288,7 +297,7 @@ class ForeignersList {
             $class = $row['attention'] == 1 ? "attention": "";
             $return .= "<tr id='{$row['id']}' class=\"{$class}\"><td>$counterForegines</td>{$this->builtRowStages($row)}</tr>";
         }
-		
+
         $return .= "</tbody></table>";
         return $return;
     }
@@ -332,6 +341,12 @@ class ForeignersList {
             return $q_result;
         }
         else return false;
+    }
+
+    public function updateForeignAfterDel($id)
+    {
+        $q_result = $this->qry("DELETE FROM {$this->_table} WHERE id='{$id}';");
+        return $q_result;
     }
 	
     public function searchForm()

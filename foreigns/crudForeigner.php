@@ -124,6 +124,14 @@ if ($_SESSION["foreignersIsauth"] === 1) {
             echo $return;
         }
         break;
+
+        case "delFromArchiv":
+            if(!empty($id)){
+                $flist = new ForeignersList();
+                $return = $flist->updateForeignAfterDel($id);
+                echo $return;
+            }
+            break;
 		
         case "before_updatefio":
         if(!empty($id)){

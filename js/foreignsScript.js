@@ -113,7 +113,7 @@ $(document).ready(function(){
     return false;
 	});
 	
-	$('.del').live('click',function (event) {//подтверждение удаления
+	$('.del').live('click',function (event) {//подтверждение удаления в архив
         $('.dialog_box').width(380).height(160);
         $('.dialogHeader h2').text('Подтверждение архивации');
         $('.dialog_box_inner').text('Вы действительно хотите перенести запись в архив?');
@@ -146,6 +146,41 @@ $(document).ready(function(){
 	    });
 	   
 	   return false;
+    });
+
+    $('.delFromArchiv').live('click',function (event) {//подтверждение удаления из БД
+        $('.dialog_box').width(380).height(160);
+        $('.dialogHeader h2').text('Подтверждение удаления записи из БД');
+        $('.dialog_box_inner').text('Вы действительно хотите удалить запись из архива? Запись будет удалена навсегда!!!');
+        $('.dialog_box_ok').unbind('click');
+        $('.dialog_box_ok').text('Да');
+
+        var delElement = $(this).parents('tr');
+        var delData = 'action=delFromArchiv&id=' + $(this).parents('tr').attr('id');
+
+        $('.dialog_box_wraper').show();
+        $('.dialog_box_cont').show();
+        $('.dialog_box_ok').show();
+
+        $('.dialog_box_ok').click(function(){
+
+            $.ajax({
+                type: "POST",
+                url: href,
+                data: delData,
+                success: function(data){
+                    if(data){
+                        delElement.remove();
+                        $('.dialog_box_wraper').hide();
+                        $('.dialog_box_cont').hide();
+                        $('.dialog_box_ok').hide();
+                    }
+                }
+            });
+
+        });
+
+        return false;
     });
 	
     $('.print').live('click', {action: 'print_order'}, printOrder);
