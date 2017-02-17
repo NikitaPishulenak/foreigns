@@ -185,11 +185,15 @@ class ForeignersList {
         $archiv = isset($_SESSION['archiv']) ?  $_SESSION['archiv'] : 0;
         $result = '';
         if(in_array($_SESSION["foreignersUserid"],$this->dekan_rule) && ($archiv === 0)) $result .= "<div class='importcsv'>Импорт csv файла</div>";
-        if(in_array($_SESSION["foreignersUserid"],$this->_rules['fio']) && ($archiv === 0)) $result .= "<div class=\"csv\">Экспорт в excel
+        if(in_array($_SESSION["foreignersUserid"],$this->_rules['fio']) && ($archiv === 0)) $result .= "<div class='csv'>Экспорт в excel
             <div class='csvInto'><ul><li><a href='/foreigns/index.php?gofor=csvexport'>Все</a></li>
             <li><a href='/foreigns/index.php?gofor=csvexport&csvmode=1'>Список {$this->getUserName($_SESSION["foreignersUserid"])}</a></li>
             <li><a href='/foreigns/index.php?gofor=csvexport&csvmode=2'>Все студенты</a></li>
             <li><a href='/foreigns/index.php?gofor=csvexport&csvmode=3'>Все не поступившие</a></li>
+            </ul></div></div>";
+
+        if(in_array($_SESSION["foreignersUserid"],$this->_rules['fio']) && ($archiv === 1)) $result .= "<div class='csv'>Экспорт в excel
+            <div class='csvInto'><ul><li><a href='/foreigns/index.php?gofor=csvexport'>Весь архив</a></li>
             </ul></div></div>";
         return $result;
     }
