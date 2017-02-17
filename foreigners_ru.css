@@ -29,8 +29,8 @@ background: linear-gradient(to left, #7474BF , #348AC7); /* W3C, IE 10+/ Edge, F
 .del{width:20px;height:21px;display:block;background: url(images/map/delete.png) no-repeat;margin-right:5px;margin-top:-15px;}
 .delFromArchiv{width:20px;height:21px;display:block;background: url(images/map/delete.png) no-repeat;margin-right:5px;margin-top:-15px;}
 .print{width:21px;height:21px;display:block;background: url(images/map/print.png) no-repeat;margin-top:10px;}
-.fio, .country, .status, .invitation, .residence, .educationcontract, .hostelorder, .hostelcontract, .ispolkom, .medicalcheckup, .enrollment, .petition, .del, .delFromArchiv, .print, .fadd, .zaselenie {cursor:pointer;}
-.fio, .country, .status, .invitation, .residence, .educationcontract, .hostelorder, .hostelcontract, .ispolkom, .medicalcheckup, .enrollment, .petition, .zaselenie{border-bottom: 1px dashed #000080;}
+.fio, .country, .status, .invitation, .residence, .educationcontract, .hostelorder, .hostelcontract, .ispolkom, .medicalcheckup, .enrollment, .petition, .del, .delFromArchiv, .print, .fadd, .zaselenie, .note, .actionEndDate, .whoInvites, .formNumber, .invitDate {cursor:pointer;}
+.fio, .country, .status, .invitation, .residence, .educationcontract, .hostelorder, .hostelcontract, .ispolkom, .medicalcheckup, .enrollment, .petition, .zaselenie, .note, .actionEndDate, .whoInvites, .formNumber, .invitDate {border-bottom: 1px dashed #000080;}
 .dateGroup{margin-right:20px;float:left;}
 .tab-container{width:100%;}
 .actions{clear:both;}
@@ -119,3 +119,5 @@ fieldset{border: 0;padding: 0;margin: 0;}
 
 #footer{display:none;width:800px;height:600px;position:relative;}
 .fixed {position: fixed; top: 0; display: none;}
+
+.highlight { background-color: yellow;}

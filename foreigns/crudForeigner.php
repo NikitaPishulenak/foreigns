@@ -195,18 +195,62 @@ if ($_SESSION["foreignersIsauth"] === 1) {
             $fio = $fio['inv'];
             $label = "Выписка приглашения на приезд";
             ob_start();
-            require_once("tpl/addForm.tpl");
+            require_once("tpl/fioForm.tpl");
             echo ob_get_clean();
         }
         break;
-		
+
+
         case "updateinvitation":
         if(!empty($id)){
             $flist = new ForeignersList();
-            $result = $flist->updateForeign($id, array('inv' => $fio, 'invdate' => $dat));
+            $result = $flist->updateForeign($id, array('inv' => $fio));
             if($result) echo "<span class='date'>{$originaldat}</span>" . "<br>" .getAggregate($fio);
         }
         break;
+
+        case "before_updateFormNumber":
+            if(!empty($id)){
+                $flist = new ForeignersList();
+                $fio = $flist->getForeign($id);
+                //$dat = empty($fio['invdate']) ? $dat = date("d.m.Y") : $fio['invdate'];
+                $fio = $fio['formNumber'];
+                $label = "Выписка приглашения на приезд";
+                ob_start();
+                require_once("tpl/fioForm.tpl");
+                echo ob_get_clean();
+            }
+            break;
+
+
+        case "updateFormNumber":
+            if(!empty($id)){
+                $flist = new ForeignersList();
+                $result = $flist->updateForeign($id, array('formNumber' => $fio));
+                if($result) echo "<span class='date'>{$originaldat}</span>" . "<br>" .getAggregate($fio);
+            }
+            break;
+
+        case "before_updateinvitationDate":
+            if(!empty($id)){
+                $flist = new ForeignersList();
+                $fio = $flist->getForeign($id);
+                $dat  = date("d.m.Y");
+                ob_start();
+                require_once("tpl/addFormDate.tpl");
+                echo ob_get_clean();
+            }
+            break;
+
+
+        case "updateinvitationDate":
+            if(!empty($id)){
+                $flist = new ForeignersList();
+                $result = $flist->updateForeign($id, array('invdate' => $dat));
+                if($result) echo "<span class='date'>{$originaldat}</span>";
+            }
+            break;
+
 		
         case "before_updateres":
         if(!empty($id)){
@@ -396,6 +440,67 @@ if ($_SESSION["foreignersIsauth"] === 1) {
             if($result) echo "<span class='date'>{$originaldat}</span>" . "<br>" .getAggregate($fio);
         }
         break;
+
+
+        case "before_updateActionEndDate":
+            if(!empty($id)){
+                $flist = new ForeignersList();
+                $fio = $flist->getForeign($id);
+                $dat = date("d.m.Y");
+                ob_start();
+                require_once("tpl/addFormDate.tpl");
+                echo ob_get_clean();
+            }
+            break;
+
+
+        case "updateActionEndDate":
+            if(!empty($id)){
+                $flist = new ForeignersList();
+                $result = $flist->updateForeign($id, array('actionEndDate' => $dat));
+                if($result) echo "<span class='date'>{$originaldat}</span>";
+            }
+            break;
+
+        case "before_updateWhoInvites":
+            if(!empty($id)){
+                $flist = new ForeignersList();
+                $fio = $flist->getForeign($id);
+                $fio = $fio['whoInvites'];
+                ob_start();
+                require_once("tpl/fioForm.tpl");
+                echo ob_get_clean();
+            }
+            break;
+
+        case "updateWhoInvites":
+            if(!empty($id)){
+                $flist = new ForeignersList();
+                $result = $flist->updateForeign($id, array('whoInvites' => $fio));
+                if($result) echo getAggregate($fio);
+            }
+            break;
+
+
+        case "before_updateNote":
+            if(!empty($id)){
+                $flist = new ForeignersList();
+                $fio = $flist->getForeign($id);
+                $fio = $fio['note'];
+                ob_start();
+                require_once("tpl/fioForm.tpl");
+                echo ob_get_clean();
+            }
+            break;
+
+        case "updateNote":
+            if(!empty($id)){
+                $flist = new ForeignersList();
+                $result = $flist->updateForeign($id, array('note' => $fio));
+                if($result) echo getAggregate($fio);
+            }
+            break;
+
     }
 	
     mysql_close($dblink);

@@ -31,11 +31,14 @@ $(document).ready(function(){
         if(value !== '' && (value.search(/^\s/) === - 1)) {
             var url = $('#searchForm').attr('action') + "/search/" + value + '/';//генерируем в соответствие с htaccess
             document.location = url;
+            //$("#foreigners").replaceText( /(value)/gi, "value" );
         }
 		
         return false;
+
 	});
-	
+
+
 	$(document).keydown(function(e) {//Закрытие окна - клавиша "Esc"
 	    if( e.keyCode === 27 ) {
 		    $('.dialog_box_wraper').hide();
@@ -187,7 +190,9 @@ $(document).ready(function(){
     $('.importcsv').live('click', {action: 'importcsv', title: "Импорт из csv файла"}, importCsv);
     $('.fio').live('click', {action: 'updatefio', title: 'Изменение ФИО'}, editData);
     $('.country').live('click', {action: 'updatecountry', title: 'Изменение страны'}, editData);
-    $('.invitation').live('click', {action: 'updateinvitation', label: 'Кто ходатайствует, № бланка', title: 'Оформление приглашения на учебу'}, editData);
+    $('.invitDate').live('click', {action: 'updateinvitationDate', title: 'Дата согласования приглашения в ОГиМ'}, editData);
+    $('.invitation').live('click', {action: 'updateinvitation', label: 'Кто ходатайствует о приглашении', title: 'Оформление приглашения на учебу'}, editData);
+    $('.formNumber').live('click', {action: 'updateFormNumber', label: '№ бланка приглашения', title: 'Оформление приглашения на учебу'}, editData);
     $('.residence').live('click', {action: 'updateres',  label: '№ ходатайства', title: 'Оформление временного пребывания'}, editData);
     $('.educationcontract').live('click', {action: 'updateedu', label: '№', title: 'Договор на обучение'}, editData);
     $('.hostelorder').live('click', {action: 'updatehor', label: '№', title: 'Оформление ордера на проживание в общежитии'}, editData);
@@ -198,6 +203,9 @@ $(document).ready(function(){
     $('.enrollment').live('click', {action: 'updateenr', label: '№', title: 'Приказ о зачислении'}, editData);
     $('.petition').live('click', {action: 'updatepet', label: '№ исходящего письма', title: 'Ходатайство на временное проживание'}, editData);
     $('.status').live('click', {action: 'updatestatus', title: 'Изменение статуса'}, editData);
+    $('.whoInvites').live('click', {action: 'updateWhoInvites', label: 'Название структурного подразделения, выдавшее приглашение', title: 'Структурное подразделение, выдавшее приглашение'}, editData);
+    $('.actionEndDate').live('click', {action: 'updateActionEndDate', title: 'Дата окончания действия приглашения'}, editData);
+    $('.note').live('click', {action: 'updateNote', label: 'Введите текст заметки', title: 'Примечание'}, editData);
 	
 	
     function editData (eventObject) {//функция редактировани этапов

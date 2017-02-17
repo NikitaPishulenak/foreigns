@@ -6,13 +6,16 @@ function updateCallBack (&$item, $key) {
 
 class ForeignersList {
     private $_table = 'iws_foreigners'; //Имя таблицы с иностранцами
-    private $_fields = array('id' => 'NULL','fio' => NULL,'adduserid' => 'NULL', 'inv' => 'NULL','invdate' => 'NULL','res' => 'NULL','resdate' => 'NULL','reshoddate' => 'NULL','edu' => 'NULL', 'edudate' => 'NULL', 'hor' => 'NULL',
-        'hordate' => 'NULL','hoc' => 'NULL','hocdate' => 'NULL','zas' => 'NULL','zasdate' => 'NULL','isp' => 'NULL','ispdate' => 'NULL','med' => 'NULL','meddate' => 'NULL','enr' => 'NULL','enrdate' => 'NULL','pet' => 'NULL','petdate' => 'NULL', 'removed' => 0, 'country' => 'NULL', 'status' => 'NULL', 'depart' => 'NULL');
-    private $_rules = array('id' =>array(1, 6, 8, 9, 17, 21), 'fio' => array(1, 6, 8, 9, 12, 17, 21), 'depart' => array(1, 6, 8, 9, 12, 17, 21), 'country' => array(1, 6, 8, 9, 12, 17, 21), 'inv' => array(1, 6, 8, 9, 12, 17, 21), 'invdate' => array(1, 6, 8, 9, 12, 17, 21),'res' => array(1, 6, 8, 9, 14, 15, 16, 17, 21), 'edu' => array(2, 8, 9, 17, 21), 'hor' => array(1, 6, 8, 9, 17, 21), 'hoc' => array(3, 8, 9, 17, 21), 'zas' => array(3, 8, 9, 17, 21),
-	    'isp' => array(6, 8, 9, 14, 15, 16, 17, 21), 'med' => array(4, 8, 9, 17, 21), 'enr' => array(1, 6, 8, 9, 13, 17, 21), 'pet' => array(1, 6, 8, 9, 14, 15, 16, 17, 21), 'status' => array(1, 6, 8, 9, 17, 21));
-    private $_sort = array('fio', 'invdate', 'resdate', 'edudate', 'hordate', 'hocdate', 'ispdate', 'meddate', 'enrdate', 'petdate', 'country', 'status', 'zasdate', 'adduserid', 'inv');
-    private $_classes = array('fio' => 'fio', 'depart' => 'depart', 'country' => 'country', 'invdate' => 'invdate', 'inv' => 'invitation', 'res' => 'residence', 'edu' => 'educationcontract', 'hor' => 'hostelorder', 'hoc' => 'hostelcontract',
-        'zas' => 'zaselenie', 'isp' => 'ispolkom', 'med' => 'medicalcheckup', 'enr' => 'enrollment','status' => 'status');
+    private $_fields = array('id' => 'NULL','fio' => NULL,'adduserid' => 'NULL', 'inv' => 'NULL','invdate' => 'NULL', 'formNumber' => 'NULL', 'res' => 'NULL','resdate' => 'NULL','reshoddate' => 'NULL','edu' => 'NULL', 'edudate' => 'NULL', 'hor' => 'NULL',
+        'hordate' => 'NULL','hoc' => 'NULL','hocdate' => 'NULL','zas' => 'NULL','zasdate' => 'NULL','isp' => 'NULL','ispdate' => 'NULL','med' => 'NULL','meddate' => 'NULL','enr' => 'NULL','enrdate' => 'NULL','pet' => 'NULL','petdate' => 'NULL', 'removed' => 0,
+        'country' => 'NULL', 'status' => 'NULL', 'depart' => 'NULL', 'whoInvites' => 'NULL', 'actionEndDate' => 'NULL', 'note' => 'NULL');
+    private $_rules = array('id' =>array(1, 6, 8, 9, 17, 21), 'fio' => array(1, 6, 8, 9, 12, 17, 21), 'depart' => array(1, 6, 8, 9, 12, 17, 21), 'formNumber' => array(1, 6, 8, 9, 12, 17, 21), 'country' => array(1, 6, 8, 9, 12, 17, 21),
+        'inv' => array(1, 6, 8, 9, 12, 17, 21), 'invdate' => array(1, 6, 8, 9, 12, 17, 21),'res' => array(1, 6, 8, 9, 14, 15, 16, 17, 21), 'edu' => array(2, 8, 9, 17, 21), 'hor' => array(1, 6, 8, 9, 17, 21), 'hoc' => array(3, 8, 9, 17, 21),
+        'zas' => array(3, 8, 9, 17, 21), 'isp' => array(6, 8, 9, 14, 15, 16, 17, 21), 'med' => array(4, 8, 9, 17, 21), 'enr' => array(1, 6, 8, 9, 13, 17, 21), 'pet' => array(1, 6, 8, 9, 14, 15, 16, 17, 21), 'status' => array(1, 6, 8, 9, 17, 21),
+        'whoInvites' => array(1, 6, 8, 9, 12, 17, 21),'actionEndDate' => array(1, 6, 8, 9, 12, 17, 21),'note' => array(1, 6, 8, 9, 12, 17, 21));
+    private $_sort = array('fio', 'invdate', 'resdate', 'edudate', 'hordate', 'hocdate', 'ispdate', 'meddate', 'enrdate', 'petdate', 'country', 'status', 'zasdate', 'adduserid', 'inv', 'formNumber', 'whoInvites', 'actionEndDate', 'note');
+    private $_classes = array('fio' => 'fio', 'depart' => 'depart', 'country' => 'country', 'invdate' => 'invitDate', 'inv' => 'invitation', 'formNumber' => 'formNumber', 'res' => 'residence', 'edu' => 'educationcontract', 'hor' => 'hostelorder', 'hoc' => 'hostelcontract',
+        'zas' => 'zaselenie', 'isp' => 'ispolkom', 'med' => 'medicalcheckup', 'enr' => 'enrollment','status' => 'status', 'whoInvites' => 'whoInvites', 'actionEndDate' => 'actionEndDate', 'note' => 'note');
 	
     private $outside = array(1, 8, 9);// users имеющие отдельные списки
     private $dekan_rule = array(1, 6, 21);
@@ -218,9 +221,9 @@ class ForeignersList {
 	
     public function getForeign($id)
     {
-        $query = $this->qry("SELECT id,fio,status,country,adduserid,inv,DATE_FORMAT(invdate,'%d.%m.%Y') invdate,res,DATE_FORMAT(resdate,'%d.%m.%Y') resdate,DATE_FORMAT(reshoddate,'%d.%m.%Y') reshoddate,edu,DATE_FORMAT(edudate,'%d.%m.%Y') edudate,
+        $query = $this->qry("SELECT id,fio, formNumber, status,country,adduserid,inv,DATE_FORMAT(invdate,'%d.%m.%Y') invdate,res,DATE_FORMAT(resdate,'%d.%m.%Y') resdate,DATE_FORMAT(reshoddate,'%d.%m.%Y') reshoddate,edu,DATE_FORMAT(edudate,'%d.%m.%Y') edudate,
             hor,DATE_FORMAT(hordate,'%d.%m.%Y') hordate,hoc,DATE_FORMAT(hocdate,'%d.%m.%Y') hocdate,zas,DATE_FORMAT(zasdate,'%d.%m.%Y') zasdate,isp,DATE_FORMAT(ispdate,'%d.%m.%Y') ispdate,med,DATE_FORMAT(meddate,'%d.%m.%Y') meddate,enr,
-            DATE_FORMAT(enrdate,'%d.%m.%Y') enrdate,pet,DATE_FORMAT(petdate,'%d.%m.%Y') petdate,IF((DATEDIFF(CURDATE(),resdate)>=5 AND (res IS NULL)),1,0) as attention
+            DATE_FORMAT(enrdate,'%d.%m.%Y') enrdate,pet,DATE_FORMAT(petdate,'%d.%m.%Y') petdate,IF((DATEDIFF(CURDATE(),resdate)>=5 AND (res IS NULL)),1,0) as attention, whoInvites, actionEndDate, note
             FROM {$this->_table} WHERE id='{$id}'");
         $row = (mysql_num_rows($query) === 1) ? mysql_fetch_assoc($query) : array();
         return $row;
@@ -235,7 +238,8 @@ class ForeignersList {
 		
         if(in_array($_SESSION["foreignersUserid"], $this->outside)) $where = "AND adduserid = '{$_SESSION["foreignersUserid"]}' ";
 		//тут поиск
-        if(isset($_SESSION['foreignersSearch'])) $where .= "AND fio LIKE '%{$_SESSION['foreignersSearch']}%' OR country LIKE '%{$_SESSION['foreignersSearch']}%'";
+        if(isset($_SESSION['foreignersSearch'])) $where .= "AND fio LIKE '%{$_SESSION['foreignersSearch']}%' OR country LIKE '%{$_SESSION['foreignersSearch']}%' OR res LIKE '%{$_SESSION['foreignersSearch']}%' OR formNumber LIKE '%{$_SESSION['foreignersSearch']}%' OR whoInvites LIKE '%{$_SESSION['foreignersSearch']}%' OR enr LIKE '%{$_SESSION['foreignersSearch']}%' OR pet LIKE '%{$_SESSION['foreignersSearch']}%' 
+        OR inv LIKE '%{$_SESSION['foreignersSearch']}%' OR edu LIKE '%{$_SESSION['foreignersSearch']}%' OR hor LIKE '%{$_SESSION['foreignersSearch']}%' OR hoc LIKE '%{$_SESSION['foreignersSearch']}%' OR zas LIKE '%{$_SESSION['foreignersSearch']}%' OR isp LIKE '%{$_SESSION['foreignersSearch']}%' OR med LIKE '%{$_SESSION['foreignersSearch']}%'  OR note LIKE '%{$_SESSION['foreignersSearch']}%'";
         $return = "<table id='foreigners' class=\"table_col\">
         <thead><tr>
             <th>
@@ -251,10 +255,13 @@ class ForeignersList {
                 <a href='" . self::IURL . "&sort=10{$this->partDirection($direction)}'>Страна</a>
             </th>
             <th>
-                <a href='" . self::IURL . "&sort=1{$this->partDirection($direction)}'>Дата приглашения</a>
+                <a href='" . self::IURL . "&sort=1{$this->partDirection($direction)}'>Дата согласования пришлашения в ОГиМ</a>
             </th>
             <th>
-                <a href='" . self::IURL . "&sort=14{$this->partDirection($direction)}'>Приглашения на учебу</a>
+                <a href='" . self::IURL . "&sort=14{$this->partDirection($direction)}'>Кто ходатайствует о приглашении</a>
+            </th>
+            <th>
+                <a href='" . self::IURL . "&sort=15{$this->partDirection($direction)}'>№ бланка приглашения</a>
             </th>
             <th>
                 <a href='" . self::IURL . "&sort=2{$this->partDirection($direction)}'>Оформление временного пребывания</a>
@@ -283,11 +290,20 @@ class ForeignersList {
             <th>
                 <a href='" . self::IURL . "&sort=11{$this->partDirection($direction)}'>Статус</a>
             </th>
+            <th>
+                <a href='" . self::IURL . "&sort=16{$this->partDirection($direction)}'>Структурное подразделение, выдавшее приглашение</a>
+            </th>
+            <th>
+                <a href='" . self::IURL . "&sort=17{$this->partDirection($direction)}'>Дата окончания действия приглашения</a>
+            </th>
+            <th>
+                <a href='" . self::IURL . "&sort=18{$this->partDirection($direction)}'>Примечание</a>
+            </th>
         </tr></thead>
         <tbody>";
-        $query = $this->qry("SELECT id,fio,status,country,adduserid,inv,DATE_FORMAT(invdate,'%d.%m.%Y') invdate,res,DATE_FORMAT(resdate,'%d.%m.%Y') resdate,DATE_FORMAT(reshoddate,'%d.%m.%Y') reshoddate,edu,DATE_FORMAT(edudate,'%d.%m.%Y') edudate,
+        $query = $this->qry("SELECT id,fio,status, formNumber,country,adduserid,inv,DATE_FORMAT(invdate,'%d.%m.%Y') invdate,res,DATE_FORMAT(resdate,'%d.%m.%Y') resdate,DATE_FORMAT(reshoddate,'%d.%m.%Y') reshoddate,edu,DATE_FORMAT(edudate,'%d.%m.%Y') edudate,
             hor,DATE_FORMAT(hordate,'%d.%m.%Y') hordate,hoc,DATE_FORMAT(hocdate,'%d.%m.%Y') hocdate,zas,DATE_FORMAT(zasdate,'%d.%m.%Y') zasdate,isp,DATE_FORMAT(ispdate,'%d.%m.%Y') ispdate,med,DATE_FORMAT(meddate,'%d.%m.%Y') meddate,enr,
-            DATE_FORMAT(enrdate,'%d.%m.%Y') enrdate,pet,DATE_FORMAT(petdate,'%d.%m.%Y') petdate,IF((DATEDIFF(CURDATE(),resdate)>=5 AND (res IS NULL)),1,0) as attention
+            DATE_FORMAT(enrdate,'%d.%m.%Y') enrdate,pet,DATE_FORMAT(petdate,'%d.%m.%Y') petdate,IF((DATEDIFF(CURDATE(),resdate)>=5 AND (res IS NULL)),1,0) as attention, whoInvites, actionEndDate, note
             FROM {$this->_table} WHERE removed = '{$archiv}' {$where} ORDER BY {$attention} {$this->_table}.{$sort} {$direction}");
 
         $counterForegines=0;
@@ -313,10 +329,10 @@ class ForeignersList {
     {
         if (!empty($data)) {
             $this->_fields = array_merge($this->_fields,$data);
-            $sql = "INSERT INTO {$this->_table} VALUES ('{$this->_fields['id']}','{$this->_fields['fio']}',{$_SESSION["foreignersUserid"]},{$this->_fields['inv']},{$this->_fields['invdate']},{$this->_fields['res']},{$this->_fields['resdate']},
+            $sql = "INSERT INTO {$this->_table} VALUES ('{$this->_fields['id']}','{$this->_fields['fio']}',{$_SESSION["foreignersUserid"]},{$this->_fields['inv']},{$this->_fields['invdate']}, {$this->_fields['formNumber']}, {$this->_fields['res']},{$this->_fields['resdate']},
                 {$this->_fields['reshoddate']},{$this->_fields['edu']},{$this->_fields['edudate']},{$this->_fields['hor']},{$this->_fields['hordate']},{$this->_fields['hoc']},{$this->_fields['hocdate']},{$this->_fields['zas']},{$this->_fields['zasdate']},
                 {$this->_fields['isp']},{$this->_fields['ispdate']},{$this->_fields['med']},{$this->_fields['meddate']},{$this->_fields['enr']},{$this->_fields['enrdate']},
-                {$this->_fields['pet']},{$this->_fields['petdate']},{$this->_fields['removed']},{$this->_fields['country']},{$this->_fields['status']})";
+                {$this->_fields['pet']},{$this->_fields['petdate']},{$this->_fields['removed']},{$this->_fields['country']},{$this->_fields['status']},{$this->_fields['whoInvites']},{$this->_fields['actionEndDate']},{$this->_fields['note']})";
             $query = $this->qry($sql);
 				
             if($query) $fid = mysql_insert_id();
