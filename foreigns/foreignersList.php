@@ -9,7 +9,7 @@ class ForeignersList {
     private $_fields = array('id' => 'NULL','fio' => NULL,'adduserid' => 'NULL', 'inv' => 'NULL','invdate' => 'NULL', 'formNumber' => 'NULL', 'res' => 'NULL','resdate' => 'NULL','reshoddate' => 'NULL','edu' => 'NULL', 'edudate' => 'NULL', 'hor' => 'NULL',
         'hordate' => 'NULL','hoc' => 'NULL','hocdate' => 'NULL','zas' => 'NULL','zasdate' => 'NULL','isp' => 'NULL','ispdate' => 'NULL','med' => 'NULL','meddate' => 'NULL','enr' => 'NULL','enrdate' => 'NULL','pet' => 'NULL','petdate' => 'NULL', 'removed' => 0,
         'country' => 'NULL', 'status' => 'NULL', 'depart' => 'NULL', 'whoInvites' => 'NULL', 'actionEndDate' => 'NULL', 'note' => 'NULL');
-    private $_rules = array('id' =>array(1, 6, 8, 9, 17, 21), 'fio' => array(1, 6, 8, 9, 12, 17, 21), 'depart' => array(1, 6, 8, 9, 12, 17, 21), 'formNumber' => array(1, 6, 8, 9, 12, 17, 21), 'country' => array(1, 6, 8, 9, 12, 17, 21),
+    private $_rules = array('id' =>array(1, 6, 8, 9, 17, 21), 'fio' => array(1, 6, 8, 9, 12, 17, 21), 'depart' => array(1, 6, 8, 9, 12, 17, 21), 'formNumber' => array(1, 6, 8, 9, 12, 17, 21), 'country' => array(1, 6, 8, 9, 12, 17, 21), 'delForeigners' => array(6,21),
         'inv' => array(1, 6, 8, 9, 12, 17, 21), 'invdate' => array(1, 6, 8, 9, 12, 17, 21),'res' => array(1, 6, 8, 9, 14, 15, 16, 17, 21), 'edu' => array(2, 8, 9, 17, 21), 'hor' => array(1, 6, 8, 9, 17, 21), 'hoc' => array(3, 8, 9, 17, 21),
         'zas' => array(3, 8, 9, 17, 21), 'isp' => array(6, 8, 9, 14, 15, 16, 17, 21), 'med' => array(4, 8, 9, 17, 21), 'enr' => array(1, 6, 8, 9, 13, 17, 21), 'pet' => array(1, 6, 8, 9, 14, 15, 16, 17, 21), 'status' => array(1, 6, 8, 9, 17, 21),
         'whoInvites' => array(1, 6, 8, 9, 12, 17, 21),'actionEndDate' => array(1, 6, 8, 9, 12, 17, 21),'note' => array(1, 6, 8, 9, 12, 17, 21));
@@ -19,7 +19,7 @@ class ForeignersList {
 	
     private $outside = array(1, 8, 9);// users имеющие отдельные списки
     private $dekan_rule = array(1, 6, 21);
-    private $status_PO = 'foreigners_statusPO';//думаю убрать
+    private $status_PO = 'foreigners_statusPO';
     private $status_table = 'foreigners_status';
     private $users_table = 'foreigners_users';
 
@@ -166,7 +166,7 @@ class ForeignersList {
     public function ClassDelFromArchiv()
     {
         $result = '';
-        if(in_array($_SESSION["foreignersUserid"],$this->_rules['fio']))
+        if(in_array($_SESSION["foreignersUserid"],$this->_rules['delForeigners']))
             $result = "<br><span class='delFromArchiv' title='Удалить из БД'></span>";
 
         return $result;
