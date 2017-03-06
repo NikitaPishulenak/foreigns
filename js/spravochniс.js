@@ -1,1 +1,0 @@
-$(document).ready(function(){$('head').append("<link rel='stylesheet' type='text/css' href='http://"+location.hostname+"/style_spravochnik.css'>");}
