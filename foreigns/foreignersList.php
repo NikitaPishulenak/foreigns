@@ -1,4 +1,9 @@
 <?php
+//ini_set('error_reporting', E_ALL);
+//ini_set('display_errors', 1);
+//ini_set('display_startup_errors', 1);
+header('Content-Type: text/html; charset=cp1251');
+
 function updateCallBack (&$item, $key) {
     if(empty($item)) $item = "{$key} = NULL";
     else $item = "{$key} = '{$item}'";
@@ -54,15 +59,16 @@ class ForeignersList {
     public function getAggregate($key, $val)
     {
         $archiv = isset($_SESSION['archiv']) ?  $_SESSION['archiv'] : 0;
-		
-        if($key == 'status') $val = $this->getStatusName($val);
-       // elseif($key == 'depart') $val = $this->getDepartment($key, $val);
-        //elseif($key == 'fio') $val .= $this->getUserName();
 
-        if($key!=='depart')
+        if($key == 'status') $val = $this->getStatusName($val);
+
+
+        $text="";
+       if($key!=='depart')
             $text = ($archiv === 1) ? '' : 'добавить';
-		
-        return empty($val) ? $text : "<span class='text'>{$val}</span>";
+
+
+        return empty($val) ? @$text : "<span class='text'>{$val}</span>";
     }
 	
     public function getUserName($id)
@@ -200,9 +206,10 @@ class ForeignersList {
 	
     protected function getDescribe($key, $val)
     {
-        if($key == 'fio' || $key == 'country' || $key == 'status' || $key == 'depart' || $key == 'inv') $result = "";
+        if($key == 'fio' || $key == 'country' || $key == 'status' || $key == 'depart' || $key == 'inv' || $key == 'invdate' || $key == 'formNumber' || $key == 'whoInvites'|| $key == 'note' || $key == 'actionEndDate' ) $result = "";
+        //elseif( ) $result = "<span class='date'>{$val[$key]}</span><br>";
         else $result = "<span class='date'>{$val[$key.'date']}</span><br>";
-		
+
         return $result;
     }
 
@@ -212,8 +219,8 @@ class ForeignersList {
         $archiv = isset($_SESSION['archiv']) ?  $_SESSION['archiv'] : 0;
 
         foreach($this->_classes as $key => $value) {
-			if(in_array($_SESSION["foreignersUserid"], $this->_rules[$key]) && ($archiv === 0)) $result .= "<td class='{$value}td'><span class='{$value}'>{$this->getDescribe($key, $row)}{$this->getAggregate($key, $row[$key])}</span>{$this->getDepartment($row['adduserid'], $key)}</td>"; // позв редактировать
-            elseif(in_array($_SESSION["foreignersUserid"], $this->_rules[$key]) && ($archiv === 1)) $result .= "<td class='{$value}td'><span>{$this->getDescribe($key, $row)}{$this->getAggregate($key, $row[$key])}</span>{$this->getDepartment($row['adduserid'], $key)}</td>";
+			if(in_array($_SESSION["foreignersUserid"], $this->_rules[$key]) && ($archiv === 0)) $result .= "<td class='{$value}td'><span class='{$value}'>{$this->getDescribe($key, $row)}{$this->getAggregate($key, @$row[$key])}</span>{$this->getDepartment($row['adduserid'], $key)}</td>"; // позв редактировать
+            elseif(in_array($_SESSION["foreignersUserid"], $this->_rules[$key]) && ($archiv === 1)) $result .= "<td class='{$value}td'><span>{$this->getDescribe($key, $row)}{$this->getAggregate($key, @$row[$key])}</span>{$this->getDepartment($row['adduserid'], $key)}</td>";
             else  $result .= "<td class='{$value}td'><span>{$this->getDescribe($key, $row)}{$this->getAggregateStatus($key, $row)}</span>{$this->getDepartment($row['adduserid'], $key)}</td>";
         }
 		

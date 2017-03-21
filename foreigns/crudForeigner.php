@@ -34,21 +34,21 @@ if ($_SESSION["foreignersIsauth"] === 1) {
     require_once('config/configForeigners.php');
     require_once('../languages/lang_ru.php');
     require_once("../foreigns/foreignersList.php");
-    $action = iconv('UTF-8', 'Windows-1251',$_POST['action']);
+    $action = iconv('UTF-8', 'Windows-1251',@$_POST['action']);
     if(isset($_FILES["filename"])) $action = "importcsv";
-    $id = iconv('UTF-8', 'Windows-1251',sanitizeString($_POST['id']));
-    $fio = iconv('UTF-8', 'Windows-1251',sanitizeString(trim($_POST['fio'])));
+    $id = iconv('UTF-8', 'Windows-1251',sanitizeString(@$_POST['id']));
+    $fio = iconv('UTF-8', 'Windows-1251',sanitizeString(trim(@$_POST['fio'])));
 	
-    if(preg_match('/^(0[1-9]|[1-2][0-9]|3[0-1]).(0[1-9]|1[0-2]).20([0-9]{2})$/', $_POST['datu'])) {
-        $originaldat = $_POST['datu'];
-        $dat = DateUserToSQL($_POST['datu']);
+    if(preg_match('/^(0[1-9]|[1-2][0-9]|3[0-1]).(0[1-9]|1[0-2]).20([0-9]{2})$/', @$_POST['datu'])) {
+        $originaldat = @$_POST['datu'];
+        $dat = DateUserToSQL(@$_POST['datu']);
     }
     else {
         $originaldat = NULL;
         $dat = NULL;
     }
 	
-    if(preg_match('/^(0[1-9]|[1-2][0-9]|3[0-1]).(0[1-9]|1[0-2]).20([0-9]{2})$/', $_POST['datuhod'])) $dathod = DateUserToSQL($_POST['datuhod']);
+    if(preg_match('/^(0[1-9]|[1-2][0-9]|3[0-1]).(0[1-9]|1[0-2]).20([0-9]{2})$/', @$_POST['datuhod'])) $dathod = DateUserToSQL($_POST['datuhod']);
     else $dathod = NULL;
 	
     $dblink = mysql_connect($dbhost, $dbuname, $dbpass) or die("Не могу подключиться к базе");
@@ -107,7 +107,7 @@ if ($_SESSION["foreignersIsauth"] === 1) {
             $return = $flist->addForeign(array('fio' => $fio));
         }
 		
-        if(!$return) {
+        if(@!$return) {
             echo "<div class=\"error\">Введите корректные данные</div>";
             ob_start();
             require_once("tpl/fioForm.tpl");
